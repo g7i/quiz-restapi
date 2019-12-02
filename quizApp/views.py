@@ -1,3 +1,7 @@
+from django.http import HttpResponse
+import json
+import requests
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -15,11 +19,13 @@ from .serializers import (
     ChoiceSerializer,
     ScoreSerializer
 )
-from .models import Subject,Class,Topic,Module,Question,Choice,Score
+from .models import Subject, Class, Topic, Module, Question, Choice, Score
+
 
 class SubjectList(ListAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
 
 class SubjectCreate(CreateAPIView):
     queryset = Subject.objects.all()
@@ -28,17 +34,21 @@ class SubjectCreate(CreateAPIView):
     # def perform_create(self,serializer):
     #     serializer.save(user=self.request.user)
 
+
 class SubjectRetrieve(RetrieveAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
 
 class SubjectUpdate(UpdateAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
+
 class SubjectRetUp(RetrieveUpdateAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
 
 class SubjectDestroy(DestroyAPIView):
     queryset = Subject.objects.all()
@@ -46,9 +56,11 @@ class SubjectDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class ClassList(ListAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializer
+
 
 class ClassCreate(CreateAPIView):
     queryset = Class.objects.all()
@@ -57,17 +69,21 @@ class ClassCreate(CreateAPIView):
     # def perform_create(self,serializer):
     #     serializer.save(user=self.request.user)
 
+
 class ClassRetrieve(RetrieveAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializer
+
 
 class ClassUpdate(UpdateAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializer
 
+
 class ClassRetUp(RetrieveUpdateAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializer
+
 
 class ClassDestroy(DestroyAPIView):
     queryset = Class.objects.all()
@@ -80,21 +96,26 @@ class TopicList(ListAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
+
 class TopicCreate(CreateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
 
 class TopicRetrieve(RetrieveAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
+
 class TopicUpdate(UpdateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
+
 class TopicRetUp(RetrieveUpdateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
 
 class TopicDestroy(DestroyAPIView):
     queryset = Topic.objects.all()
@@ -104,24 +125,31 @@ class TopicDestroy(DestroyAPIView):
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
 class ModuleList(ListAPIView):
+    serializer_class = ModuleSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['subject__id']
+    queryset = Module.objects.all()
+
+
+class ModuleCreate(CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
 
-class  ModuleCreate(CreateAPIView):
-    queryset = Module.objects.all()
-    serializer_class = ModuleSerializer
 
 class ModuleRetrieve(RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
 
+
 class ModuleUpdate(UpdateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
 
+
 class ModuleRetUp(RetrieveUpdateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
+
 
 class ModuleDestroy(DestroyAPIView):
     queryset = Module.objects.all()
@@ -134,21 +162,26 @@ class QuestionList(ListAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
-class  QuestionCreate(CreateAPIView):
+
+class QuestionCreate(CreateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
 
 class QuestionRetrieve(RetrieveAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
+
 class QuestionUpdate(UpdateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
+
 class QuestionRetUp(RetrieveUpdateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
 
 class QuestionDestroy(DestroyAPIView):
     queryset = Question.objects.all()
@@ -156,25 +189,31 @@ class QuestionDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class ChoiceList(ListAPIView):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
 
-class  ChoiceCreate(CreateAPIView):
+
+class ChoiceCreate(CreateAPIView):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
+
 
 class ChoiceRetrieve(RetrieveAPIView):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
 
+
 class ChoiceUpdate(UpdateAPIView):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
 
+
 class ChoiceRetUp(RetrieveUpdateAPIView):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
+
 
 class ChoiceDestroy(DestroyAPIView):
     queryset = Choice.objects.all()
@@ -182,25 +221,31 @@ class ChoiceDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class ScoreList(ListAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
 
-class  ScoreCreate(CreateAPIView):
+
+class ScoreCreate(CreateAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
+
 
 class ScoreRetrieve(RetrieveAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
 
+
 class ScoreUpdate(UpdateAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
 
+
 class ScoreRetUp(RetrieveUpdateAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
+
 
 class ScoreDestroy(DestroyAPIView):
     queryset = Score.objects.all()
@@ -209,10 +254,6 @@ class ScoreDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
-
-import requests
-import json
-from django.http import HttpResponse
 
 def quizs(request):
     url = "https://quiz-rest.herokuapp.com/?format=json"

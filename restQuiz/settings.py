@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quizApp',
-    'rest_framework'
+    'rest_framework',
+    'account',
+    'rest_framework.authtoken',
+    'rest_auth',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +124,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-import django_heroku 
-# Then all the way at the bottom of the file
-# ... 
-django_heroku.settings(locals())
+# import django_heroku
+# # Then all the way at the bottom of the file
+# # ...
+# django_heroku.settings(locals())
+AUTH_USER_MODEL = 'account.User'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated', )
+# }
