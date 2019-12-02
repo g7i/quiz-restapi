@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -124,10 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# import django_heroku
-# # Then all the way at the bottom of the file
-# # ...
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 AUTH_USER_MODEL = 'account.User'
 
 # REST_FRAMEWORK = {
