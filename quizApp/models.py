@@ -56,7 +56,7 @@ class Question(models.Model):
     title = models.TextField(max_length=1000)
 
     def __str__(self):
-        return self.topic.title+':'+self.question[:15]
+        return self.topic.title+':'+self.title[:15]
 
 
 class Choice(models.Model):
@@ -74,7 +74,7 @@ class Choice(models.Model):
     answer = models.CharField(max_length=1, choices=ANSWER)
 
     def __str__(self):
-        return self.question
+        return self.question.title
 
 
 class Score(models.Model):
