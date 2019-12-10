@@ -53,19 +53,25 @@ class Topic(models.Model):
 
 class Question(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    question = models.TextField(max_length=1000)
-    answer = models.CharField(max_length=50)
+    title = models.TextField(max_length=1000)
 
     def __str__(self):
         return self.topic.title+':'+self.question[:15]
 
 
 class Choice(models.Model):
+    ANSWER = (
+        ('a', 'a'),
+        ('b', 'b'),
+        ('c', 'c'),
+        ('d', 'd'),
+    )
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_a = models.CharField(max_length=50)
-    choice_b = models.CharField(max_length=50)
-    choice_c = models.CharField(max_length=50)
-    choice_d = models.CharField(max_length=50)
+    a = models.CharField(max_length=50)
+    b = models.CharField(max_length=50)
+    c = models.CharField(max_length=50)
+    d = models.CharField(max_length=50)
+    answer = models.CharField(max_length=1, choices=ANSWER)
 
     def __str__(self):
         return self.question
