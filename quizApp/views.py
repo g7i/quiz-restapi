@@ -93,6 +93,8 @@ class ClassDestroy(DestroyAPIView):
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
 class TopicList(ListAPIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['module__id']
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
