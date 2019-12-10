@@ -197,7 +197,7 @@ class QuestionDestroy(DestroyAPIView):
 class ChoiceList(ListAPIView):
     queryset = Choice.objects.all()
     filter_backends = [SearchFilter]
-    search_fields = ['topic__id']
+    search_fields = ['question__id']
     serializer_class = ChoiceSerializer
 
 
