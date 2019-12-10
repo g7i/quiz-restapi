@@ -162,6 +162,8 @@ class ModuleDestroy(DestroyAPIView):
 
 class QuestionList(ListAPIView):
     queryset = Question.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = ['topic__id']
     serializer_class = QuestionSerializer
 
 
