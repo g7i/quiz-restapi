@@ -92,9 +92,10 @@ class ClassDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class TopicList(ListAPIView):
     filter_backends = [SearchFilter]
-    search_fields = ['module__id']
+    search_fields = ['@module__id']
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
@@ -126,10 +127,11 @@ class TopicDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class ModuleList(ListAPIView):
     serializer_class = ModuleSerializer
     filter_backends = [SearchFilter]
-    search_fields = ['subject__id']
+    search_fields = ['@subject__id']
     queryset = Module.objects.all()
 
 
@@ -160,10 +162,11 @@ class ModuleDestroy(DestroyAPIView):
 
 ##/////##/////##/////##/////##/////##/////##/////##/////##/////##/////##
 
+
 class QuestionList(ListAPIView):
     queryset = Question.objects.all()
     filter_backends = [SearchFilter]
-    search_fields = ['topic__id']
+    search_fields = ['@topic__id']
     serializer_class = QuestionSerializer
 
 
@@ -197,7 +200,7 @@ class QuestionDestroy(DestroyAPIView):
 class ChoiceList(ListAPIView):
     queryset = Choice.objects.all()
     filter_backends = [SearchFilter]
-    search_fields = ['question__id']
+    search_fields = ['@question__id']
     serializer_class = ChoiceSerializer
 
 
