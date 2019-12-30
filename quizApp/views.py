@@ -131,7 +131,7 @@ class TopicDestroy(DestroyAPIView):
 class ModuleList(ListAPIView):
     serializer_class = ModuleSerializer
     filter_backends = [SearchFilter]
-    search_fields = ['@subject__id']
+    search_fields = ['subject__@id']
     queryset = Module.objects.all()
 
 
