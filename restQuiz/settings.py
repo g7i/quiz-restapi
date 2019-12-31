@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import dj_database_url
-import django_heroku
+# import dj_database_url
+# import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'account',
     'rest_framework.authtoken',
     'rest_auth',
+    'edu'
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'restQuiz/static')
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -134,8 +142,8 @@ STATIC_URL = '/static/'
 #         'rest_framework.permissions.IsAuthenticated', )
 # }
 
-django_heroku.settings(locals())
-prod_db = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# django_heroku.settings(locals())
+# prod_db = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 AUTH_USER_MODEL = 'account.User'
