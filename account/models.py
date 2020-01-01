@@ -7,6 +7,7 @@ class User(AbstractUser):
         ('Student', 'Student'),
         ('Teacher', 'Teacher'),
         ('Officer', 'Officer'),
+        ('Blood Bank', 'Blood Bank'),
     )
 
     user_type = models.CharField(
@@ -23,6 +24,19 @@ class Student(models.Model):
     address = models.TextField()
     state = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class BloodBank(models.Model):
+    tahsil = models.CharField(max_length=50)
+    mobile_number = models.BigIntegerField()
+    address = models.TextField()
+    region = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10)
 
     def __str__(self):
         return self.user.username
