@@ -12,18 +12,18 @@
 # from django.contrib.auth import authenticate
 from rest_framework import generics
 
-from . import models
-from . import serializers
+from django.contrib.auth import get_user_model
+from .serializers import UserCreateSerializer
+User = get_user_model()
 
-
-class UserListView(generics.ListAPIView):
-    queryset = models.User.objects.all()
-    serializer_class = serializers.UserSerializer
+# class UserListView(generics.ListAPIView):
+#     queryset = models.User.objects.all()
+#     serializer_class = serializers.UserSerializer
 
 
 class UserCreateView(generics.CreateAPIView):
-    queryset = models.User.objects.all()
-    serializer_class = serializers.UserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
 
 
 # @csrf_exempt
