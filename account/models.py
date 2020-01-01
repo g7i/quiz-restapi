@@ -30,9 +30,12 @@ class Student(models.Model):
 
 
 class BloodBank(models.Model):
+    name = models.CharField(max_length=100)
     tahsil = models.CharField(max_length=50)
     mobile_number = models.BigIntegerField()
     address = models.TextField()
+    state = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
     region = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     latitude = models.DecimalField(max_digits=15, decimal_places=10)
@@ -43,7 +46,10 @@ class BloodBank(models.Model):
 
 
 class Hospital(models.Model):
-    tahsil = models.CharField(max_length=50)
+    tahsil = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
     mobile_number = models.BigIntegerField()
     region = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

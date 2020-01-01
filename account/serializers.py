@@ -7,6 +7,7 @@ User = get_user_model()
 class StudentCreateSerializer(serializers.ModelSerializer):
     father_name = serializers.CharField(label='father_name')
     father_aadhar = serializers.IntegerField(label='father_aadhar')
+    aadhar = serializers.IntegerField(label='aadhar')
     mobile_number = serializers.IntegerField(label='mobile_number')
     address = serializers.CharField(label='address')
     state = serializers.CharField(label='state')
@@ -14,7 +15,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'username',
+            'aadhar',
             'password',
             'email',
             'first_name',
@@ -31,7 +32,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        username = validated_data['username']
+        username = validated_data['aadhar']
         email = validated_data['email']
         first_name = validated_data['first_name']
         password = validated_data['password']
@@ -63,17 +64,21 @@ class StudentCreateSerializer(serializers.ModelSerializer):
 class BloodBankCreateSerializer(serializers.ModelSerializer):
     tahsil = serializers.CharField(label='tahsil')
     mobile_number = serializers.IntegerField(label='mobile_number')
+    aadhar = serializers.IntegerField(label='aadhar')
     address = serializers.CharField(label='address')
     region = serializers.CharField(label='region')
     latitude = serializers.DecimalField(
         label='latitude', max_digits=15, decimal_places=10)
     longitude = serializers.DecimalField(
         label='longitude', max_digits=15, decimal_places=10)
+    state = serializers.CharField(label='state')
+    district = serializers.CharField(label='district')
+    name = serializers.CharField(label='name')
 
     class Meta:
         model = User
         fields = [
-            'username',
+            'aadhar',
             'password',
             'email',
             'first_name',
@@ -82,7 +87,10 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
             'longitude',
             'mobile_number',
             'address',
-            'region'
+            'region',
+            'state',
+            'district',
+            'name'
         ]
         extra_kwargs = {
             "password": {
@@ -91,7 +99,7 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        username = validated_data['username']
+        username = validated_data['aadhar']
         email = validated_data['email']
         first_name = validated_data['first_name']
         password = validated_data['password']
@@ -101,6 +109,9 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
         address = validated_data['address']
         mobile_number = validated_data['mobile_number']
         region = validated_data['region']
+        state = validated_data['state']
+        district = validated_data['district']
+        name = validated_data['name']
         user_obj = User.objects.create_user(
             username=username,
             email=email,
@@ -115,7 +126,10 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
             region=region,
             latitude=latitude,
             longitude=longitude,
-            user=user_obj
+            user=user_obj,
+            state=state,
+            district=district,
+            name=name
         )
         return validated_data
 
@@ -124,7 +138,11 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
 
 class HospitalCreateSerializer(serializers.ModelSerializer):
     tahsil = serializers.CharField(label='tahsil')
+    state = serializers.CharField(label='state')
+    district = serializers.CharField(label='district')
+    name = serializers.CharField(label='name')
     mobile_number = serializers.IntegerField(label='mobile_number')
+    aadhar = serializers.IntegerField(label='aadhar')
     region = serializers.CharField(label='region')
     latitude = serializers.DecimalField(
         label='latitude', max_digits=15, decimal_places=10)
@@ -134,7 +152,7 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'username',
+            'aadhar',
             'password',
             'email',
             'first_name',
@@ -142,7 +160,10 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
             'latitude',
             'longitude',
             'mobile_number',
-            'region'
+            'region',
+            'state',
+            'district',
+            'name'
         ]
         extra_kwargs = {
             "password": {
@@ -151,7 +172,7 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        username = validated_data['username']
+        username = validated_data['aadhar']
         email = validated_data['email']
         first_name = validated_data['first_name']
         password = validated_data['password']
@@ -160,6 +181,9 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
         longitude = validated_data['longitude']
         mobile_number = validated_data['mobile_number']
         region = validated_data['region']
+        state = validated_data['state']
+        district = validated_data['district']
+        name = validated_data['name']
         user_obj = User.objects.create_user(
             username=username,
             email=email,
@@ -173,6 +197,9 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
             region=region,
             latitude=latitude,
             longitude=longitude,
+            state=state,
+            district=district,
+            name=name,
             user=user_obj
         )
         return validated_data
