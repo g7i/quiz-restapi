@@ -7,7 +7,7 @@ User = get_user_model()
 class UserCreateSerializer(serializers.ModelSerializer):
     father_name = serializers.CharField(label='father_name')
     father_aadhar = serializers.IntegerField(label='father_name')
-    mobile_number = serializers.IntegerField(label='address')
+    mobile_number = serializers.IntegerField(label='mobile_number')
     address = serializers.CharField(label='address')
     state = serializers.CharField(label='state')
 
