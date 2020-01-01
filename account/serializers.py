@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank
+from .models import Student, BloodBank, Hospital
 User = get_user_model()
 
 
@@ -112,6 +112,64 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
             tahsil=tahsil,
             mobile_number=mobile_number,
             address=address,
+            region=region,
+            latitude=latitude,
+            longitude=longitude,
+            user=user_obj
+        )
+        return validated_data
+
+###############################################################################
+
+
+class HospitalCreateSerializer(serializers.ModelSerializer):
+    tahsil = serializers.CharField(label='tahsil')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    region = serializers.CharField(label='region')
+    latitude = serializers.DecimalField(
+        label='latitude', max_digits=15, decimal_places=10)
+    longitude = serializers.DecimalField(
+        label='longitude', max_digits=15, decimal_places=10)
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+            'email',
+            'first_name',
+            'tahsil',
+            'latitude',
+            'longitude',
+            'mobile_number',
+            'region'
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['username']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        tahsil = validated_data['tahsil']
+        latitude = validated_data['latitude']
+        longitude = validated_data['longitude']
+        mobile_number = validated_data['mobile_number']
+        region = validated_data['region']
+        user_obj = User.objects.create_user(
+            username=username,
+            email=email,
+            user_type="Hospital",
+            password=password,
+            first_name=first_name
+        )
+        Hospital.objects.create(
+            tahsil=tahsil,
+            mobile_number=mobile_number,
             region=region,
             latitude=latitude,
             longitude=longitude,

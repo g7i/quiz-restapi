@@ -40,3 +40,15 @@ class BloodBank(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Hospital(models.Model):
+    tahsil = models.CharField(max_length=50)
+    mobile_number = models.BigIntegerField()
+    region = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10)
+
+    def __str__(self):
+        return self.user.username

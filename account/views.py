@@ -13,7 +13,11 @@
 from rest_framework import generics
 
 from django.contrib.auth import get_user_model
-from .serializers import StudentCreateSerializer, BloodBankCreateSerializer
+from .serializers import (
+    StudentCreateSerializer,
+    BloodBankCreateSerializer,
+    HospitalCreateSerializer,
+)
 User = get_user_model()
 
 # class UserListView(generics.ListAPIView):
@@ -29,6 +33,11 @@ class StudentCreateView(generics.CreateAPIView):
 class BloodBankCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = BloodBankCreateSerializer
+
+
+class HospitalCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = HospitalCreateSerializer
 
 
 # @csrf_exempt

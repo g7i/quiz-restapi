@@ -7,5 +7,7 @@ urlpatterns = [
     path('student/create', views.StudentCreateView.as_view(), name="StudentCreate"),
     path('bloodbank/create', views.BloodBankCreateView.as_view(),
          name="BloodBankCreate"),
+    path('hospital/create', views.HospitalCreateView.as_view(),
+         name="HospitalCreate"),
     path('rest-auth/', include('rest_auth.urls')),
 ]
