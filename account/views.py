@@ -5,8 +5,8 @@
 #     HTTP_404_NOT_FOUND,
 #     HTTP_200_OK
 # )
-# from rest_framework.permissions import AllowAny
-# from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
 # from rest_framework.authtoken.models import Token
 # from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth import authenticate
@@ -25,16 +25,19 @@ User = get_user_model()
 #     serializer_class = serializers.UserSerializer
 
 
+@permission_classes((AllowAny,))
 class StudentCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = StudentCreateSerializer
 
 
+@permission_classes((AllowAny,))
 class BloodBankCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = BloodBankCreateSerializer
 
 
+@permission_classes((AllowAny,))
 class HospitalCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = HospitalCreateSerializer
