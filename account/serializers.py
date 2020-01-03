@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital
+from .models import Student, BloodBank, Hospital, Parent
 User = get_user_model()
 
 
@@ -200,6 +200,56 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
             state=state,
             district=district,
             name=name,
+            user=user_obj
+        )
+        return validated_data
+
+
+###############################################################################
+
+
+class ParentCreateSerializer(serializers.ModelSerializer):
+    state = serializers.CharField(label='state')
+    address = serializers.CharField(label='address')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    aadhar = serializers.IntegerField(label='aadhar')
+
+    class Meta:
+        model = User
+        fields = [
+            'aadhar',
+            'password',
+            'email',
+            'first_name',
+            'mobile_number',
+            'address',
+            'state',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['aadhar']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        mobile_number = validated_data['mobile_number']
+        address = validated_data['address']
+        state = validated_data['state']
+        user_obj = User.objects.create_user(
+            username=username,
+            email=email,
+            user_type="Parent",
+            password=password,
+            first_name=first_name
+        )
+        Parent.objects.create(
+            mobile_number=mobile_number,
+            address=address,
+            state=state,
             user=user_obj
         )
         return validated_data

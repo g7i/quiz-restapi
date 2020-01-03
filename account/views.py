@@ -17,6 +17,7 @@ from .serializers import (
     StudentCreateSerializer,
     BloodBankCreateSerializer,
     HospitalCreateSerializer,
+    ParentCreateSerializer,
 )
 User = get_user_model()
 
@@ -41,6 +42,12 @@ class BloodBankCreateView(generics.CreateAPIView):
 class HospitalCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = HospitalCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class ParentCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = ParentCreateSerializer
 
 
 # @csrf_exempt

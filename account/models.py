@@ -6,8 +6,8 @@ class User(AbstractUser):
     USER = (
         ('Student', 'Student'),
         ('Teacher', 'Teacher'),
-        ('Officer', 'Officer'),
         ('Blood Bank', 'Blood Bank'),
+        ('Parent', 'Parent'),
     )
 
     user_type = models.CharField(
@@ -55,6 +55,16 @@ class Hospital(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     latitude = models.DecimalField(max_digits=15, decimal_places=10)
     longitude = models.DecimalField(max_digits=15, decimal_places=10)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Parent(models.Model):
+    state = models.CharField(max_length=50)
+    mobile_number = models.BigIntegerField()
+    address = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
