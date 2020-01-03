@@ -314,13 +314,12 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
     state = serializers.CharField(label='state')
     address = serializers.CharField(label='address')
     mobile_number = serializers.IntegerField(label='mobile_number')
-    key = serializers.CharField(label='key')
     aadhar = serializers.IntegerField(label='aadhar')
+    school_id = serializers.IntegerField(label='school_id')
 
     class Meta:
         model = User
         fields = [
-            'key',
             'aadhar',
             'password',
             'email',
@@ -328,6 +327,7 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
             'mobile_number',
             'address',
             'state',
+            'school_id'
         ]
         extra_kwargs = {
             "password": {
@@ -343,7 +343,7 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
         mobile_number = validated_data['mobile_number']
         address = validated_data['address']
         state = validated_data['state']
-        key = validated_data['key']
+        school_id = validated_data['school_id']
         user_obj = User.objects.create_user(
             username=username,
             email=email,
@@ -355,7 +355,7 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
             mobile_number=mobile_number,
             address=address,
             state=state,
-            key=key,
+            school_id=school_id,
             user=user_obj
         )
         return validated_data

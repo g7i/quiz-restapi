@@ -84,7 +84,7 @@ class School(models.Model):
 
 
 class Teacher(models.Model):
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
     address = models.TextField()
     mobile_number = models.BigIntegerField()
     state = models.CharField(max_length=50)
