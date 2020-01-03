@@ -8,8 +8,10 @@ urlpatterns = [
 
     path('teacher/create', views.TeacherCreateView.as_view(), name="TeacherCreate"),
 
-    path('school/create', views.SchoolCreateView.as_view(),
-         name="SchoolCreate"),
+    path('school/create', views.SchoolCreateView.as_view(), name="SchoolCreate"),
+
+    path('<str:key>/school',
+         views.SchoolRetrieveView.as_view(), name="SchoolRetrieve"),
 
     path('parent/create', views.ParentCreateView.as_view(), name="ParentCreate"),
 

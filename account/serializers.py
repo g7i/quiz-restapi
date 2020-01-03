@@ -359,3 +359,16 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
             user=user_obj
         )
         return validated_data
+
+############################################################################################
+
+
+class SchoolRetrieveSerializer(serializers.ModelSerializer):
+    school_id = serializers.IntegerField(label="f", source="school.id")
+
+    class Meta:
+        model = User
+        fields = [
+            'school_id',
+            'first_name'
+        ]

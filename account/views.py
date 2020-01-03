@@ -5,12 +5,14 @@
 #     HTTP_404_NOT_FOUND,
 #     HTTP_200_OK
 # )
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 # from rest_framework.authtoken.models import Token
 # from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth import authenticate
 from rest_framework import generics
+from .models import School
 
 from django.contrib.auth import get_user_model
 from .serializers import (
@@ -20,6 +22,7 @@ from .serializers import (
     ParentCreateSerializer,
     SchoolCreateSerializer,
     TeacherCreateSerializer,
+    SchoolRetrieveSerializer,
 )
 User = get_user_model()
 
@@ -56,6 +59,14 @@ class ParentCreateView(generics.CreateAPIView):
 class SchoolCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SchoolCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class SchoolRetrieveView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = SchoolRetrieveSerializer
+    lookup_field = 'username'
+    lookup_url_kwarg = 'key'
 
 
 @permission_classes((AllowAny,))
