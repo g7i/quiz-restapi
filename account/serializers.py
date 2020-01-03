@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital, Parent
+from .models import Student, BloodBank, Hospital, Parent, School
 User = get_user_model()
 
 
@@ -250,6 +250,59 @@ class ParentCreateSerializer(serializers.ModelSerializer):
             mobile_number=mobile_number,
             address=address,
             state=state,
+            user=user_obj
+        )
+        return validated_data
+
+###############################################################################
+
+
+class SchoolCreateSerializer(serializers.ModelSerializer):
+    state = serializers.CharField(label='state')
+    address = serializers.CharField(label='address')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    key = serializers.CharField(label='key')
+    board = serializers.CharField(label='board')
+
+    class Meta:
+        model = User
+        fields = [
+            'key',
+            'password',
+            'email',
+            'first_name',
+            'mobile_number',
+            'address',
+            'state',
+            'board',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['key']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        mobile_number = validated_data['mobile_number']
+        address = validated_data['address']
+        state = validated_data['state']
+        board = validated_data['board']
+        user_obj = User.objects.create_user(
+            username=username,
+            email=email,
+            user_type="School",
+            password=password,
+            first_name=first_name
+        )
+        School.objects.create(
+            mobile_number=mobile_number,
+            address=address,
+            state=state,
+            board=board,
             user=user_obj
         )
         return validated_data

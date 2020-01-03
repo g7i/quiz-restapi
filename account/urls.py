@@ -5,6 +5,8 @@ urlpatterns = [
     # path("login", views.login, name="login"),
     # path('', views.UserListView.as_view(), name="UserList"),
     path('student/create', views.StudentCreateView.as_view(), name="StudentCreate"),
+    path('school/create', views.SchoolCreateView.as_view(),
+         name="SchoolCreate"),
     path('parent/create', views.ParentCreateView.as_view(), name="ParentCreate"),
     path('bloodbank/create', views.BloodBankCreateView.as_view(),
          name="BloodBankCreate"),
