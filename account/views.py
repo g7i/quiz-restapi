@@ -19,6 +19,7 @@ from .serializers import (
     HospitalCreateSerializer,
     ParentCreateSerializer,
     SchoolCreateSerializer,
+    TeacherCreateSerializer,
 )
 User = get_user_model()
 
@@ -55,6 +56,12 @@ class ParentCreateView(generics.CreateAPIView):
 class SchoolCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SchoolCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class TeacherCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = TeacherCreateSerializer
 
 
 # @csrf_exempt

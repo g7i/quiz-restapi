@@ -9,6 +9,7 @@ class User(AbstractUser):
         ('Blood Bank', 'Blood Bank'),
         ('Parent', 'Parent'),
         ('Hospital', 'Hospital'),
+        ('Teacher', 'Teacher'),
     )
 
     user_type = models.CharField(
@@ -73,6 +74,17 @@ class Parent(models.Model):
 
 class School(models.Model):
     board = models.CharField(max_length=100)
+    address = models.TextField()
+    mobile_number = models.BigIntegerField()
+    state = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Teacher(models.Model):
+    key = models.CharField(max_length=50)
     address = models.TextField()
     mobile_number = models.BigIntegerField()
     state = models.CharField(max_length=50)

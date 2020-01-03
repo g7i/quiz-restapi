@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital, Parent, School
+from .models import Student, BloodBank, Hospital, Parent, School, Teacher
 User = get_user_model()
 
 
@@ -303,6 +303,59 @@ class SchoolCreateSerializer(serializers.ModelSerializer):
             address=address,
             state=state,
             board=board,
+            user=user_obj
+        )
+        return validated_data
+
+###############################################################################
+
+
+class TeacherCreateSerializer(serializers.ModelSerializer):
+    state = serializers.CharField(label='state')
+    address = serializers.CharField(label='address')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    key = serializers.CharField(label='key')
+    aadhar = serializers.IntegerField(label='aadhar')
+
+    class Meta:
+        model = User
+        fields = [
+            'key',
+            'aadhar',
+            'password',
+            'email',
+            'first_name',
+            'mobile_number',
+            'address',
+            'state',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['aadhar']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        mobile_number = validated_data['mobile_number']
+        address = validated_data['address']
+        state = validated_data['state']
+        key = validated_data['key']
+        user_obj = User.objects.create_user(
+            username=username,
+            email=email,
+            user_type="Teacher",
+            password=password,
+            first_name=first_name
+        )
+        Teacher.objects.create(
+            mobile_number=mobile_number,
+            address=address,
+            state=state,
+            key=key,
             user=user_obj
         )
         return validated_data
