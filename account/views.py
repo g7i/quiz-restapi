@@ -21,8 +21,10 @@ from .serializers import (
     HospitalCreateSerializer,
     ParentCreateSerializer,
     SchoolCreateSerializer,
+    CommunityCreateSerializer,
     TeacherCreateSerializer,
     SchoolRetrieveSerializer,
+    DriverCreateSerializer,
 )
 User = get_user_model()
 
@@ -73,6 +75,18 @@ class SchoolRetrieveView(generics.RetrieveAPIView):
 class TeacherCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = TeacherCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class CommunityCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CommunityCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class DriverCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = DriverCreateSerializer
 
 
 # @csrf_exempt

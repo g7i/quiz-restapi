@@ -10,6 +10,8 @@ class User(AbstractUser):
         ('Parent', 'Parent'),
         ('Hospital', 'Hospital'),
         ('Teacher', 'Teacher'),
+        ('Community', 'Community'),
+        ('Driver', 'Driver'),
     )
 
     user_type = models.CharField(
@@ -88,6 +90,36 @@ class Teacher(models.Model):
     address = models.TextField()
     mobile_number = models.BigIntegerField()
     state = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Community(models.Model):
+    service = models.CharField(max_length=100)
+    amb_number = models.CharField(max_length=50)
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10)
+    district = models.CharField(max_length=50)
+    address = models.TextField()
+    mobile_number = models.BigIntegerField()
+    state = models.CharField(max_length=50)
+    org_name = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Driver(models.Model):
+    dl_number = models.CharField(max_length=50)
+    driving_exp = models.DecimalField(max_digits=15, decimal_places=2)
+    age = models.IntegerField()
+    photo = models.FileField(upload_to='drivers/')
+    mobile_number = models.BigIntegerField()
+    state = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

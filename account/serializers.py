@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital, Parent, School, Teacher
+from .models import Student, BloodBank, Hospital, Parent, School, Teacher, Community, Driver
 User = get_user_model()
 
 
@@ -372,3 +372,143 @@ class SchoolRetrieveSerializer(serializers.ModelSerializer):
             'school_id',
             'first_name'
         ]
+
+
+###############################################################################
+
+
+class CommunityCreateSerializer(serializers.ModelSerializer):
+    service = serializers.CharField(label="service")
+    aadhar = serializers.CharField(label="aadhar")
+    amb_number = serializers.CharField(label="amb_number")
+    latitude = serializers.DecimalField(
+        max_digits=15, decimal_places=10, label="latitude")
+    longitude = serializers.DecimalField(
+        max_digits=15, decimal_places=10, label="longitude")
+    district = serializers.CharField(label="district")
+    address = serializers.CharField(label="address")
+    mobile_number = serializers.IntegerField(label="mobile_number")
+    state = serializers.CharField(label="state")
+    org_name = serializers.CharField(label="org_name")
+
+    class Meta:
+        model = User
+        fields = [
+            'aadhar',
+            'password',
+            'first_name',
+            'service',
+            'amb_number',
+            'latitude',
+            'longitude',
+            'district',
+            'address',
+            'mobile_number',
+            'state',
+            'org_name',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['aadhar']
+        service = validated_data['service']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        amb_number = validated_data['amb_number']
+        longitude = validated_data['longitude']
+        latitude = validated_data['latitude']
+        district = validated_data['district']
+        mobile_number = validated_data['mobile_number']
+        address = validated_data['address']
+        state = validated_data['state']
+        org_name = validated_data['org_name']
+        user_obj = User.objects.create_user(
+            username=username,
+            user_type="Community",
+            password=password,
+            first_name=first_name
+        )
+        Community.objects.create(
+            mobile_number=mobile_number,
+            address=address,
+            state=state,
+            service=service,
+            amb_number=amb_number,
+            longitude=longitude,
+            latitude=latitude,
+            district=district,
+            org_name=org_name,
+            user=user_obj
+        )
+        return validated_data
+
+
+###############################################################################
+
+
+class DriverCreateSerializer(serializers.ModelSerializer):
+    aadhar = serializers.CharField(label="aadhar")
+    dl_number = serializers.CharField(label='dl_number')
+    driving_exp = serializers.DecimalField(
+        max_digits=15, decimal_places=2, label='driving_exp')
+    age = serializers.IntegerField(label='age')
+    photo = serializers.FileField(label='photo')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    state = serializers.CharField(label='state')
+    district = serializers.CharField(label='district')
+
+    class Meta:
+        model = User
+        fields = [
+            'aadhar',
+            'password',
+            'first_name',
+            'email',
+            'dl_number',
+            'driving_exp',
+            'age',
+            'photo',
+            'mobile_number',
+            'state',
+            'district',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['aadhar']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        email = validated_data['email']
+        dl_number = validated_data['dl_number']
+        driving_exp = validated_data['driving_exp']
+        age = validated_data['age']
+        mobile_number = validated_data['mobile_number']
+        photo = validated_data['photo']
+        state = validated_data['state']
+        district = validated_data['district']
+        user_obj = User.objects.create_user(
+            username=username,
+            user_type="Driver",
+            password=password,
+            first_name=first_name,
+            email=email
+        )
+        Driver.objects.create(
+            dl_number=dl_number,
+            driving_exp=driving_exp,
+            age=age,
+            mobile_number=mobile_number,
+            photo=photo,
+            state=state,
+            district=district,
+            user=user_obj
+        )
+        return validated_data

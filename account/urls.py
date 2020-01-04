@@ -10,6 +10,11 @@ urlpatterns = [
 
     path('school/create', views.SchoolCreateView.as_view(), name="SchoolCreate"),
 
+    path('driver/create', views.DriverCreateView.as_view(), name="DriverCreate"),
+
+    path('community/create', views.CommunityCreateView.as_view(),
+         name="CommunityCreate"),
+
     path('<str:key>/school',
          views.SchoolRetrieveView.as_view(), name="SchoolRetrieve"),
 
