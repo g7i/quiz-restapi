@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital, Parent, School, Teacher, Community, Driver
+from .models import Student, BloodBank, Hospital, Parent, School, Teacher, Community, Driver, HospitalStaff
 User = get_user_model()
 
 
@@ -140,6 +140,7 @@ class BloodBankCreateSerializer(serializers.ModelSerializer):
 class HospitalCreateSerializer(serializers.ModelSerializer):
     tahsil = serializers.CharField(label='tahsil')
     state = serializers.CharField(label='state')
+    key = serializers.CharField(label='key')
     district = serializers.CharField(label='district')
     name = serializers.CharField(label='name')
     mobile_number = serializers.IntegerField(label='mobile_number')
@@ -158,6 +159,7 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'tahsil',
+            'key',
             'latitude',
             'longitude',
             'mobile_number',
@@ -177,6 +179,7 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
         email = validated_data['email']
         first_name = validated_data['first_name']
         password = validated_data['password']
+        key = validated_data['key']
         tahsil = validated_data['tahsil']
         latitude = validated_data['latitude']
         longitude = validated_data['longitude']
@@ -198,12 +201,113 @@ class HospitalCreateSerializer(serializers.ModelSerializer):
             region=region,
             latitude=latitude,
             longitude=longitude,
+            key=key,
             state=state,
             district=district,
             name=name,
             user=user_obj
         )
         return validated_data
+
+
+###############################################################################
+
+
+class HospitalStaffCreateSerializer(serializers.ModelSerializer):
+    TYPE = (
+        ('ward', 'ward'),
+        ('lab', 'lab')
+    )
+    tahseel = serializers.CharField(label='tahseel')
+    staff_type = serializers.ChoiceField(label='staff_type', choices=TYPE)
+    state = serializers.CharField(label='state')
+    hospital_id = serializers.CharField(label='hospital_id')
+    district = serializers.CharField(label='district')
+    hospital_name = serializers.CharField(label='hospital_name')
+    mobile_number = serializers.IntegerField(label='mobile_number')
+    aadhar = serializers.IntegerField(label='aadhar')
+    region = serializers.CharField(label='region')
+    village = serializers.CharField(label='village')
+    latitude = serializers.DecimalField(
+        label='latitude', max_digits=15, decimal_places=10)
+    longitude = serializers.DecimalField(
+        label='longitude', max_digits=15, decimal_places=10)
+
+    class Meta:
+        model = User
+        fields = [
+            'aadhar',
+            'staff_type',
+            'password',
+            'email',
+            'first_name',
+            'tahseel',
+            'hospital_id',
+            'latitude',
+            'longitude',
+            'mobile_number',
+            'region',
+            'hospital_name',
+            'village',
+            'state',
+            'district',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['aadhar']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        password = validated_data['password']
+        hospital_id = validated_data['hospital_id']
+        tahseel = validated_data['tahseel']
+        latitude = validated_data['latitude']
+        longitude = validated_data['longitude']
+        mobile_number = validated_data['mobile_number']
+        region = validated_data['region']
+        state = validated_data['state']
+        district = validated_data['district']
+        village = validated_data['village']
+        hospital_name = validated_data['hospital_name']
+        staff_type = validated_data['staff_type']
+        user_obj = User.objects.create_user(
+            username=username,
+            email=email,
+            user_type="Hospital Staff",
+            password=password,
+            first_name=first_name
+        )
+        HospitalStaff.objects.create(
+            tahseel=tahseel,
+            mobile_number=mobile_number,
+            region=region,
+            latitude=latitude,
+            longitude=longitude,
+            hospital_id=get_object_or_404(Hospital, pk=hospital_id),
+            state=state,
+            district=district,
+            village=village,
+            hospital_name=hospital_name,
+            staff_type=staff_type,
+            user=user_obj
+        )
+        return validated_data
+
+############################################################################################
+
+
+class HospitalRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hospital
+        fields = [
+            'id',
+            'name'
+        ]
 
 
 ###############################################################################
@@ -365,7 +469,7 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
 
 
 class SchoolRetrieveSerializer(serializers.ModelSerializer):
-    school_id = serializers.IntegerField(label="f", source="school.id")
+    school_id = serializers.IntegerField(label="school_id", source="school.id")
 
     class Meta:
         model = User

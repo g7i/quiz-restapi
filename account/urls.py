@@ -12,11 +12,17 @@ urlpatterns = [
 
     path('driver/create', views.DriverCreateView.as_view(), name="DriverCreate"),
 
+    path('hospitalstaff/create', views.HospitalStaffCreateView.as_view(),
+         name="HospitalStaffCreate"),
+
     path('community/create', views.CommunityCreateView.as_view(),
          name="CommunityCreate"),
 
-    path('<str:key>/school',
-         views.SchoolRetrieveView.as_view(), name="SchoolRetrieve"),
+    path('<str:key>/school', views.SchoolRetrieveView.as_view(),
+         name="SchoolRetrieve"),
+
+    path('<str:key>/hospital', views.HospitalRetrieveView.as_view(),
+         name="HospitalRetrieve"),
 
     path('parent/create', views.ParentCreateView.as_view(), name="ParentCreate"),
 

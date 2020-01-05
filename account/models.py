@@ -12,6 +12,7 @@ class User(AbstractUser):
         ('Teacher', 'Teacher'),
         ('Community', 'Community'),
         ('Driver', 'Driver'),
+        ('Hospital Staff', 'Hospital Staff'),
     )
 
     user_type = models.CharField(
@@ -52,6 +53,7 @@ class BloodBank(models.Model):
 class Hospital(models.Model):
     tahsil = models.CharField(max_length=100)
     name = models.CharField(max_length=50)
+    key = models.CharField(max_length=50, unique=True)
     state = models.CharField(max_length=50)
     district = models.CharField(max_length=50)
     mobile_number = models.BigIntegerField()
@@ -121,6 +123,30 @@ class Driver(models.Model):
     state = models.CharField(max_length=50)
     district = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class HospitalStaff(models.Model):
+
+    TYPE = (
+        ('ward', 'ward'),
+        ('lab', 'lab')
+    )
+
+    hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+    hospital_name = models.CharField(max_length=100)
+    mobile_number = models.BigIntegerField()
+    state = models.CharField(max_length=50)
+    tahseel = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+    region = models.CharField(max_length=50)
+    village = models.CharField(max_length=50)
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    staff_type = models.CharField(max_length=10, choices=TYPE)
 
     def __str__(self):
         return self.user.username
