@@ -53,7 +53,7 @@ class BloodBank(models.Model):
 class Hospital(models.Model):
     tahsil = models.CharField(max_length=100)
     name = models.CharField(max_length=50)
-    key = models.CharField(max_length=50, unique=True)
+    key = models.CharField(max_length=50, unique=True, null=True)
     state = models.CharField(max_length=50)
     district = models.CharField(max_length=50)
     mobile_number = models.BigIntegerField()
