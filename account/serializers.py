@@ -623,5 +623,5 @@ class DriverCreateSerializer(serializers.ModelSerializer):
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
-        Model = Teacher
+        model = Teacher
         fields = "__all__"
