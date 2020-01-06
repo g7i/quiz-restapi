@@ -21,6 +21,9 @@ urlpatterns = [
     path('<str:key>/school', views.SchoolRetrieveView.as_view(),
          name="SchoolRetrieve"),
 
+    path('teacher', views.TeacherList.as_view(),
+         name="TeacherRetrieve"),
+
     path('<str:key>/hospital', views.HospitalRetrieveView.as_view(),
          name="HospitalRetrieve"),
 

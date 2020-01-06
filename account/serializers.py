@@ -617,3 +617,11 @@ class DriverCreateSerializer(serializers.ModelSerializer):
             user=user_obj
         )
         return validated_data
+
+
+###########################################################################
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        Model = Teacher
+        fields = "__all__"

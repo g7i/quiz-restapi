@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth import authenticate
 from rest_framework import generics
-from .models import School, Hospital
+from .models import School, Hospital, Teacher
 
 from django.contrib.auth import get_user_model
 from .serializers import (
@@ -27,6 +27,7 @@ from .serializers import (
     SchoolRetrieveSerializer,
     DriverCreateSerializer,
     HospitalStaffCreateSerializer,
+    TeacherSerializer,
 )
 User = get_user_model()
 
@@ -104,6 +105,13 @@ class DriverCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = DriverCreateSerializer
 
+
+@permission_classes((AllowAny,))
+class TeacherList(generics.ListAPIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['=school_id__id']
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
 
 # @csrf_exempt
 # @api_view(["POST"])
