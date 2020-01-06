@@ -622,6 +622,10 @@ class DriverCreateSerializer(serializers.ModelSerializer):
 ###########################################################################
 
 class TeacherSerializer(serializers.ModelSerializer):
+    aadhar = serializers.IntegerField(label="aadhar", source="user.username")
+    name = serializers.CharField(label="aadhar", source="user.first_name")
+    email = serializers.CharField(label="aadhar", source="user.email")
+
     class Meta:
         model = Teacher
         fields = "__all__"
