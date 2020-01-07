@@ -8,7 +8,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView
 )
 from .serializers import NoteSerializer, TeacherDetailSerializer
-from .models import Note, Teacher
+from .models import Note, TeacherDetail
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
@@ -47,7 +47,7 @@ class NoteDestroy(DestroyAPIView):
 
 @permission_classes((AllowAny,))
 class TeacherDetailCreate(CreateAPIView):
-    queryset = Teacher.objects.all()
+    queryset = TeacherDetail.objects.all()
     serializer_class = TeacherDetailSerializer
 
 
@@ -55,5 +55,5 @@ class TeacherDetailCreate(CreateAPIView):
 class TeacherDetailView(ListAPIView):
     filter_backends = [SearchFilter]
     search_fields = ['=teacher__id']
-    queryset = Teacher.objects.all()
+    queryset = TeacherDetail.objects.all()
     serializer_class = TeacherDetailSerializer
