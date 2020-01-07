@@ -7,8 +7,8 @@ from rest_framework.generics import (
     CreateAPIView,
     RetrieveUpdateAPIView
 )
-from .serializers import NoteSerializer, TeacherDetailSerializer
-from .models import Note, TeacherDetail
+from .serializers import NoteSerializer, TeacherDetailSerializer, SchoolActivitySerializer
+from .models import Note, TeacherDetail, SchoolActivity
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
@@ -57,3 +57,17 @@ class TeacherDetailView(ListAPIView):
     search_fields = ['=teacher__id']
     queryset = TeacherDetail.objects.all()
     serializer_class = TeacherDetailSerializer
+
+
+@permission_classes((AllowAny,))
+class SchoolActivityCreate(CreateAPIView):
+    queryset = SchoolActivity.objects.all()
+    serializer_class = SchoolActivitySerializer
+
+
+@permission_classes((AllowAny,))
+class SchoolActivityList(ListAPIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['=school__id']
+    queryset = SchoolActivity.objects.all()
+    serializer_class = SchoolActivitySerializer

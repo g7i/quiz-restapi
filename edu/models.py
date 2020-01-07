@@ -1,6 +1,6 @@
 from django.db import models
 from quizApp.models import Module, Class, Subject
-from account.models import Teacher
+from account.models import Teacher, School
 
 
 class Note(models.Model):
@@ -19,4 +19,13 @@ class TeacherDetail(models.Model):
     batch = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.teacher.user.first_name + " : " + self.clas.title
+        return self.teacher.user.first_name + " : " + self.clas.std
+
+
+class SchoolActivity(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    notice = models.TextField()
+    venue = models.TextField()
+    teacher = models.TextField()
+    student = models.TextField()
