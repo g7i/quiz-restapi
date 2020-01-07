@@ -495,6 +495,7 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
     mobile_number = serializers.IntegerField(label="mobile_number")
     state = serializers.CharField(label="state")
     org_name = serializers.CharField(label="org_name")
+    key = serializers.CharField(label="key")
 
     class Meta:
         model = User
@@ -511,6 +512,7 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
             'mobile_number',
             'state',
             'org_name',
+            'key',
         ]
         extra_kwargs = {
             "password": {
@@ -530,6 +532,7 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
         mobile_number = validated_data['mobile_number']
         address = validated_data['address']
         state = validated_data['state']
+        key = validated_data['key']
         org_name = validated_data['org_name']
         user_obj = User.objects.create_user(
             username=username,
@@ -541,6 +544,7 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
             mobile_number=mobile_number,
             address=address,
             state=state,
+            key=key,
             service=service,
             amb_number=amb_number,
             longitude=longitude,
@@ -552,6 +556,20 @@ class CommunityCreateSerializer(serializers.ModelSerializer):
         return validated_data
 
 
+############################################################################################
+
+
+class CommunityRetrieveSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(label="name", source="user.first_name")
+
+    class Meta:
+        model = Community
+        fields = [
+            'id',
+            'name'
+        ]
+
+
 ###############################################################################
 
 
@@ -561,6 +579,7 @@ class DriverCreateSerializer(serializers.ModelSerializer):
     driving_exp = serializers.DecimalField(
         max_digits=15, decimal_places=2, label='driving_exp')
     age = serializers.IntegerField(label='age')
+    com_id = serializers.IntegerField(label='com_id')
     photo = serializers.FileField(label='photo')
     mobile_number = serializers.IntegerField(label='mobile_number')
     state = serializers.CharField(label='state')
@@ -573,6 +592,7 @@ class DriverCreateSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'email',
+            'com_id',
             'dl_number',
             'driving_exp',
             'age',
@@ -597,6 +617,7 @@ class DriverCreateSerializer(serializers.ModelSerializer):
         age = validated_data['age']
         mobile_number = validated_data['mobile_number']
         photo = validated_data['photo']
+        com_id = validated_data['com_id']
         state = validated_data['state']
         district = validated_data['district']
         user_obj = User.objects.create_user(
@@ -613,6 +634,7 @@ class DriverCreateSerializer(serializers.ModelSerializer):
             mobile_number=mobile_number,
             photo=photo,
             state=state,
+            com_id=get_object_or_404(Community, pk=com_id),
             district=district,
             user=user_obj
         )

@@ -101,6 +101,7 @@ class Teacher(models.Model):
 class Community(models.Model):
     service = models.CharField(max_length=100)
     amb_number = models.CharField(max_length=50)
+    key = models.CharField(max_length=50, unique=True)
     latitude = models.DecimalField(max_digits=15, decimal_places=10)
     longitude = models.DecimalField(max_digits=15, decimal_places=10)
     district = models.CharField(max_length=50)
@@ -119,6 +120,7 @@ class Driver(models.Model):
     driving_exp = models.DecimalField(max_digits=15, decimal_places=2)
     age = models.IntegerField()
     photo = models.FileField(upload_to='drivers/')
+    com_id = models.ForeignKey(Community, on_delete=models.CASCADE)
     mobile_number = models.BigIntegerField()
     state = models.CharField(max_length=50)
     district = models.CharField(max_length=50)

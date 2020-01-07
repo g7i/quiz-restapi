@@ -12,11 +12,12 @@ from rest_framework.decorators import api_view, permission_classes
 # from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth import authenticate
 from rest_framework import generics
-from .models import School, Hospital, Teacher
+from .models import School, Hospital, Teacher, Community
 
 from django.contrib.auth import get_user_model
 from .serializers import (
     StudentCreateSerializer,
+    CommunityRetrieveSerializer,
     BloodBankCreateSerializer,
     HospitalCreateSerializer,
     HospitalRetrieveSerializer,
@@ -98,6 +99,13 @@ class TeacherCreateView(generics.CreateAPIView):
 class CommunityCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = CommunityCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class CommunityRetrieveView(generics.RetrieveAPIView):
+    queryset = Community.objects.all()
+    serializer_class = CommunityRetrieveSerializer
+    lookup_field = 'key'
 
 
 @permission_classes((AllowAny,))

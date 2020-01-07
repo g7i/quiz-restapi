@@ -27,6 +27,9 @@ urlpatterns = [
     path('<str:key>/hospital', views.HospitalRetrieveView.as_view(),
          name="HospitalRetrieve"),
 
+    path('<str:key>/community', views.CommunityRetrieveView.as_view(),
+         name="CommunityRetrieve"),
+
     path('parent/create', views.ParentCreateView.as_view(), name="ParentCreate"),
 
     path('bloodbank/create', views.BloodBankCreateView.as_view(),
