@@ -9,4 +9,6 @@ urlpatterns = [
     path('NoteCreate', views.NoteCreate.as_view(), name='NoteCreate'),
     path('TeacherDetailCreate', views.TeacherDetailCreate.as_view(),
          name='TeacherDetailCreate'),
+    path('TeacherDetail', views.TeacherDetailView.as_view(),
+         name='TeacherDetailView'),
 ]

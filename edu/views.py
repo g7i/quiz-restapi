@@ -18,7 +18,6 @@ class NoteList(ListAPIView):
     search_fields = ['=module__id']
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    serializer_class = NoteSerializer
 
 
 class NoteCreate(CreateAPIView):
@@ -48,5 +47,13 @@ class NoteDestroy(DestroyAPIView):
 
 @permission_classes((AllowAny,))
 class TeacherDetailCreate(CreateAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherDetailSerializer
+
+
+@permission_classes((AllowAny,))
+class TeacherDetailView(ListAPIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['=teacher__id']
     queryset = Teacher.objects.all()
     serializer_class = TeacherDetailSerializer
