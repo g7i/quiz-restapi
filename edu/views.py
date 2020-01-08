@@ -7,8 +7,8 @@ from rest_framework.generics import (
     CreateAPIView,
     RetrieveUpdateAPIView
 )
-from .serializers import NoteSerializer, TeacherDetailSerializer, SchoolActivitySerializer, StudentAddSerializer, FeedbackSerializer
-from .models import Note, TeacherDetail, SchoolActivity, Feedback, StudentAdd
+from .serializers import NoteSerializer, TeacherDetailSerializer, SchoolActivitySerializer, StudentAddSerializer, FeedbackSerializer, ReportCardSerializer
+from .models import Note, TeacherDetail, SchoolActivity, Feedback, StudentAdd, ReportCard
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
@@ -99,3 +99,17 @@ class FeedbackList(ListAPIView):
     search_fields = ['=teacher__id']
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+
+
+@permission_classes((AllowAny,))
+class ReportCardCreate(CreateAPIView):
+    queryset = ReportCard.objects.all()
+    serializer_class = ReportCardSerializer
+
+
+@permission_classes((AllowAny,))
+class ReportCardList(ListAPIView):
+    filter_backends = [SearchFilter]
+    # search_fields = ['=teacher__id']
+    queryset = ReportCard.objects.all()
+    serializer_class = ReportCardSerializer
