@@ -1,6 +1,6 @@
 from django.db import models
 from quizApp.models import Module, Class, Subject
-from account.models import Teacher, School
+from account.models import Teacher, School, Parent, Student
 
 
 class Note(models.Model):
@@ -29,3 +29,33 @@ class SchoolActivity(models.Model):
     venue = models.TextField()
     teacher = models.TextField()
     student = models.TextField()
+
+
+class StudentAdd(models.Model):
+    clas = models.ForeignKey(Class, on_delete=models.CASCADE)
+    stream = models.CharField(max_length=50)
+    batch = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    father_name = models.CharField(max_length=50)
+    aadhar = models.BigIntegerField()
+
+
+class Feedback(models.Model):
+    teacher_id = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, null=True, blank=True)
+    student_id = models.ForeignKey(
+        Student, on_delete=models.CASCADE, null=True, blank=True)
+    parent_id = models.ForeignKey(
+        Parent, on_delete=models.CASCADE, null=True, blank=True)
+    school_id = models.ForeignKey(
+        School, on_delete=models.CASCADE, null=True, blank=True)
+    field1 = models.BooleanField()
+    field2 = models.BooleanField()
+    field3 = models.BooleanField()
+    field4 = models.BooleanField()
+    field5 = models.BooleanField()
+    field6 = models.BooleanField()
+    field7 = models.BooleanField()
+    field8 = models.BooleanField()
+    field9 = models.BooleanField()
+    field10 = models.BooleanField()
