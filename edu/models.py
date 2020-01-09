@@ -1,6 +1,6 @@
 from django.db import models
 from quizApp.models import Module, Class, Subject
-from account.models import Teacher, School, Parent, Student
+from account.models import Teacher, School, Parent, Student, School
 
 
 class Note(models.Model):
@@ -81,3 +81,12 @@ class ReportCard(models.Model):
     moral_edu = models.CharField(max_length=50)
     concentration = models.CharField(max_length=50)
     suggestions = models.TextField()
+
+
+class Video(models.Model):
+    type = models.CharField(max_length=50)
+    select = models.CharField(max_length=50)
+    clas = models.CharField(max_length=20)
+    image = models.ImageField()
+    video = models.FileField(upload_to='videos/')
+    doc = models.FileField(upload_to='docV/')

@@ -22,8 +22,20 @@ class User(AbstractUser):
         return self.username
 
 
+class School(models.Model):
+    board = models.CharField(max_length=100)
+    address = models.TextField()
+    mobile_number = models.BigIntegerField()
+    state = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
 class Student(models.Model):
     father_name = models.CharField(max_length=50)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
     father_aadhar = models.BigIntegerField()
     mobile_number = models.BigIntegerField()
     address = models.TextField()
@@ -70,17 +82,6 @@ class Parent(models.Model):
     state = models.CharField(max_length=50)
     mobile_number = models.BigIntegerField()
     address = models.TextField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
-
-
-class School(models.Model):
-    board = models.CharField(max_length=100)
-    address = models.TextField()
-    mobile_number = models.BigIntegerField()
-    state = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

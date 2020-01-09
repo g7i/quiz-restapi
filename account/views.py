@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth import authenticate
 from rest_framework import generics
-from .models import School, Hospital, Teacher, Community
+from .models import School, Hospital, Teacher, Community, Student
 
 from django.contrib.auth import get_user_model
 from .serializers import (
@@ -29,6 +29,7 @@ from .serializers import (
     DriverCreateSerializer,
     HospitalStaffCreateSerializer,
     TeacherSerializer,
+    StudentSerializer,
 )
 User = get_user_model()
 
@@ -41,6 +42,14 @@ User = get_user_model()
 class StudentCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = StudentCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class StudentList(generics.ListAPIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['=school__id']
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
 
 
 @permission_classes((AllowAny,))

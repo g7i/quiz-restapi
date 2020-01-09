@@ -7,6 +7,7 @@ urlpatterns = [
     path('<int:pk>/NoteUpdate', views.NoteUpdate.as_view(), name='NoteUpdate'),
     path('<int:pk>/NoteRetUp', views.NoteRetUp.as_view(), name='NoteRetUp'),
     path('NoteCreate', views.NoteCreate.as_view(), name='NoteCreate'),
+    path('VideoList', views.VideoList.as_view(), name='VideoList'),
     path('StudentAddCreate', views.StudentAddCreate.as_view(),
          name='StudentAddCreate'),
     path('StudentAddList', views.StudentAddList.as_view(), name='StudentAddList'),

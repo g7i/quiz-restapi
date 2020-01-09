@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Note, TeacherDetail, SchoolActivity, StudentAdd, Feedback, ReportCard
+from .models import Note, TeacherDetail, SchoolActivity, StudentAdd, Feedback, ReportCard, Video
 
 
 class NoteSerializer(ModelSerializer):
@@ -35,4 +35,10 @@ class FeedbackSerializer(ModelSerializer):
 class ReportCardSerializer(ModelSerializer):
     class Meta:
         model = ReportCard
+        fields = "__all__"
+
+
+class VideoSerializer(ModelSerializer):
+    class Meta:
+        model = Video
         fields = "__all__"
