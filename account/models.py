@@ -12,6 +12,7 @@ class User(AbstractUser):
         ('Teacher', 'Teacher'),
         ('Community', 'Community'),
         ('Driver', 'Driver'),
+        ('Industry', 'Industry'),
         ('Hospital Staff', 'Hospital Staff'),
     )
 
@@ -150,6 +151,23 @@ class HospitalStaff(models.Model):
     longitude = models.DecimalField(max_digits=15, decimal_places=10)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     staff_type = models.CharField(max_length=10, choices=TYPE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Industry(models.Model):
+    tan = models.CharField(max_length=50)
+    gst = models.CharField(max_length=50)
+    opt_name = models.CharField(max_length=50)
+    desig = models.CharField(max_length=50)
+    mobile_number = models.BigIntegerField()
+    address = models.TextField()
+    teh = models.CharField(max_length=50)
+    district = models.CharField(max_length=30)
+    state = models.CharField(max_length=50)
+    pincode = models.IntegerField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

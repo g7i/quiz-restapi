@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Student, BloodBank, Hospital, Parent, School, Teacher, Community, Driver, HospitalStaff
+from .models import Student, BloodBank, Hospital, Parent, School, Teacher, Community, Driver, HospitalStaff, Industry
 User = get_user_model()
 
 
@@ -663,3 +663,82 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = "__all__"
+
+
+###############################################################################
+
+
+class IndustryCreateSerializer(serializers.ModelSerializer):
+    tan = serializers.CharField(label="tan")
+    gst = serializers.CharField(label="gst")
+    opt_name = serializers.CharField(label="opt_name")
+    desig = serializers.CharField(label="desig")
+    mobile_number = serializers.IntegerField(label="mobile_number")
+    address = serializers.CharField(label="address")
+    teh = serializers.CharField(label="teh")
+    district = serializers.CharField(label="district")
+    state = serializers.CharField(label="state")
+    pincode = serializers.IntegerField(label="pincode")
+    industry_name = serializers.CharField(label="industry_name")
+    reg_num = serializers.CharField(label="reg_name")
+
+    class Meta:
+        model = User
+        fields = [
+            'industry_name',
+            'reg_num',
+            'opt_name',
+            'email',
+            'password',
+            'tan',
+            'gst',
+            'desig',
+            'address',
+            'mobile_number',
+            'state',
+            'teh',
+            'district',
+            'pincode',
+        ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        username = validated_data['reg_num']
+        email = validated_data['email']
+        first_name = validated_data['industry_name']
+        password = validated_data['password']
+        opt_name = validated_data['opt_name']
+        tan = validated_data['tan']
+        gst = validated_data['gst']
+        desig = validated_data['desig']
+        mobile_number = validated_data['mobile_number']
+        address = validated_data['address']
+        state = validated_data['state']
+        teh = validated_data['teh']
+        district = validated_data['district']
+        pincode = validated_data['pincode']
+        user_obj = User.objects.create_user(
+            username=username,
+            user_type="Industry",
+            password=password,
+            first_name=first_name,
+            email=email
+        )
+        Industry.objects.create(
+            opt_name=opt_name,
+            tan=tan,
+            gst=gst,
+            desig=desig,
+            mobile_number=mobile_number,
+            address=address,
+            state=state,
+            teh=teh,
+            district=district,
+            pincode=pincode,
+            user=user_obj
+        )
+        return validated_data

@@ -30,6 +30,7 @@ from .serializers import (
     HospitalStaffCreateSerializer,
     TeacherSerializer,
     StudentSerializer,
+    IndustryCreateSerializer
 )
 User = get_user_model()
 
@@ -42,6 +43,12 @@ User = get_user_model()
 class StudentCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = StudentCreateSerializer
+
+
+@permission_classes((AllowAny,))
+class IndustryCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = IndustryCreateSerializer
 
 
 @permission_classes((AllowAny,))
