@@ -7,8 +7,8 @@ from rest_framework.generics import (
     CreateAPIView,
     RetrieveUpdateAPIView
 )
-from .serializers import NoteSerializer, TeacherDetailSerializer, SchoolActivitySerializer, StudentAddSerializer, FeedbackSerializer, ReportCardSerializer, VideoSerializer
-from .models import Note, TeacherDetail, SchoolActivity, Feedback, StudentAdd, ReportCard, Video
+from .serializers import NoteSerializer, TeacherDetailSerializer, SchoolActivitySerializer, StudentAddSerializer, FeedbackSerializer, ReportCardSerializer, VideoSerializer, InnovationSerializer
+from .models import Note, TeacherDetail, SchoolActivity, Feedback, StudentAdd, ReportCard, Video, Innovation
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
@@ -119,3 +119,17 @@ class ReportCardList(ListAPIView):
 class VideoList(ListAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
+
+
+@permission_classes((AllowAny,))
+class InnovationCreate(CreateAPIView):
+    queryset = Innovation.objects.all()
+    serializer_class = InnovationSerializer
+
+
+@permission_classes((AllowAny,))
+class InnovationList(ListAPIView):
+    filter_backends = [SearchFilter]
+    # search_fields = ['=teacher__id']
+    queryset = Innovation.objects.all()
+    serializer_class = InnovationSerializer

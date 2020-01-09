@@ -90,3 +90,18 @@ class Video(models.Model):
     image = models.ImageField()
     video = models.FileField(upload_to='videos/')
     doc = models.FileField(upload_to='docV/')
+
+
+class Innovation(models.Model):
+    name = models.CharField(max_length=50)
+    clas = models.CharField(max_length=20)
+    section = models.CharField(max_length=20)
+    school = models.CharField(max_length=50)
+    district = models.CharField(max_length=30)
+    state = models.CharField(max_length=50)
+    probTitle = models.TextField()
+    probDesc = models.TextField()
+    solTitle = models.TextField()
+    solDesc = models.TextField()
+    technique = models.TextField()
+    doc = models.FileField(upload_to='innovation/')

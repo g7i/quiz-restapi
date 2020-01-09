@@ -24,4 +24,7 @@ urlpatterns = [
          name='SchoolActivityList'),
     path('SchoolActivityCreate', views.SchoolActivityCreate.as_view(),
          name='SchoolActivityCreate'),
+    path('InnovationList', views.InnovationList.as_view(), name='InnovationList'),
+    path('InnovationCreate', views.InnovationCreate.as_view(),
+         name='InnovationCreate'),
 ]
