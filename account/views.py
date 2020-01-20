@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
-    HTTP_200_OK
+    HTTP_200_OK,
+    HTTP_401_UNAUTHORIZED
 )
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
@@ -144,6 +145,7 @@ class TeacherList(generics.ListAPIView):
 def login(request):
     username = request.data.get("username")
     password = request.data.get("password")
+    user_type = request.data.get("user_type")
     if username is None or password is None:
         return Response({'error': 'Please provide both username and password'},
                         status=HTTP_400_BAD_REQUEST)
@@ -151,6 +153,9 @@ def login(request):
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
+    if user_type != user.user_type:
+        return Response({'error': 'Invalid User Type'},
+                        status=HTTP_401_UNAUTHORIZED)
     token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key, 'user_type': user.user_type, 'user_id': user.id},
+    return Response({'token': token.key, 'user_type': user.user_type, 'user_id': user.id, "username": user.username},
                     status=HTTP_200_OK)
