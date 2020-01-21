@@ -36,7 +36,7 @@ class School(models.Model):
 
 class Student(models.Model):
     father_name = models.CharField(max_length=50)
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
     father_aadhar = models.BigIntegerField()
     mobile_number = models.BigIntegerField()
     address = models.TextField()

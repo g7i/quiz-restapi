@@ -10,6 +10,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     father_aadhar = serializers.IntegerField(label='father_aadhar')
     aadhar = serializers.IntegerField(label='aadhar')
     mobile_number = serializers.IntegerField(label='mobile_number')
+    school_id = serializers.IntegerField(label='school_id')
     address = serializers.CharField(label='address')
     state = serializers.CharField(label='state')
 
@@ -24,7 +25,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
             'father_aadhar',
             'mobile_number',
             'address',
-            'state'
+            'state',
+            'school_id'
         ]
         extra_kwargs = {
             "password": {
@@ -42,6 +44,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         mobile_number = validated_data['mobile_number']
         address = validated_data['address']
         state = validated_data['state']
+        school_id = validated_data['school_id']
         user_obj = User.objects.create_user(
             username=username,
             email=email,
@@ -55,7 +58,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
             mobile_number=mobile_number,
             address=address,
             state=state,
-            user=user_obj
+            user=user_obj,
+            school_id=School.objects.get(pk=school_id)
         )
         return validated_data
 
